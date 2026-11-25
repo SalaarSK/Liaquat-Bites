@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liaquat Bitess – Order Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff5f3; --card:#ffffff; --ink:#2b1210; --muted:#8a5f5a; --line:#f3d3cd;
+  --red:#c8102e; --red-d:#9b0b22; --red-l:#fde3e0; --shadow:0 10px 30px rgba(200,16,46,.12);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1a0b0b; --card:#2a1313; --ink:#fbe9e6; --muted:#c99a94; --line:#4a2323;
+    --red:#ee3a52; --red-d:#c8102e; --red-l:#3d1a1a; --shadow:0 10px 30px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1a0b0b; --card:#2a1313; --ink:#fbe9e6; --muted:#c99a94; --line:#4a2323;
+  --red:#ee3a52; --red-d:#c8102e; --red-l:#3d1a1a; --shadow:0 10px 30px rgba(0,0,0,.4);
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;min-height:100vh;
+  background-image:radial-gradient(circle at 90% -10%,var(--red-l),transparent 45%),radial-gradient(circle at -10% 110%,var(--red-l),transparent 40%)}
+header{background:linear-gradient(135deg,var(--red-d),var(--red));color:#fff;text-align:center;padding:42px 20px 70px;position:relative}
+header .badge{display:inline-block;font-size:12px;letter-spacing:.25em;text-transform:uppercase;opacity:.85;margin-bottom:8px}
+header h1{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:clamp(34px,7vw,58px);margin:0;letter-spacing:.5px}
+header p{margin:8px 0 0;opacity:.9;font-size:15px}
+nav{display:flex;gap:6px;justify-content:center;margin:-28px auto 0;position:relative;z-index:2;padding:0 16px}
+nav button{font:inherit;font-weight:500;border:0;cursor:pointer;padding:13px 24px;border-radius:999px;background:var(--card);color:var(--muted);box-shadow:var(--shadow);transition:.2s}
+nav button.on{background:var(--red);color:#fff}
+main{max-width:860px;margin:26px auto 60px;padding:0 16px}
+.card{background:var(--card);border-radius:22px;padding:26px;box-shadow:var(--shadow);border:1px solid var(--line)}
+h2{font-family:'Playfair Display',Georgia,serif;margin:0 0 4px;font-size:26px;color:var(--red)}
+.sub{color:var(--muted);margin:0 0 22px;font-size:14px}
+label.l{display:block;font-weight:600;font-size:13px;margin:18px 0 8px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+input[type=text],input[type=number]{width:100%;font:inherit;padding:13px 15px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);outline:none;transition:.2s}
+input:focus{border-color:var(--red);box-shadow:0 0 0 4px var(--red-l)}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--line)}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr.pick{background:var(--red-l)}
+.item{display:flex;align-items:center;gap:12px;font-weight:500}
+.item .em{font-size:28px}
+.qty{display:inline-flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--red);background:transparent;color:var(--red);font-size:20px;line-height:1;cursor:pointer;font-family:inherit}
+.qty button:hover{background:var(--red);color:#fff}
+.qty span{min-width:22px;text-align:center;font-weight:600}
+.money{position:relative}
+.money b{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--red);font-weight:600}
+.money input{padding-left:46px}
+.go{width:100%;margin-top:24px;font:inherit;font-weight:600;font-size:16px;border:0;border-radius:16px;padding:15px;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--red),var(--red-d));box-shadow:0 8px 20px rgba(200,16,46,.35);transition:.2s}
+.go:hover{transform:translateY(-2px)}
+.msg{margin-top:14px;font-size:14px;min-height:20px;text-align:center}
+.msg.err{color:var(--red)} .msg.ok{color:#1f9d55}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.stat{background:var(--red-l);border-radius:18px;padding:16px 18px}
+.stat small{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.stat div{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:700;color:var(--red)}
+.tag{display:inline-block;background:var(--red-l);color:var(--red);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:600;margin:2px 4px 2px 0;white-space:nowrap}
+.del{border:0;background:transparent;color:var(--muted);cursor:pointer;font:inherit;font-size:13px;padding:6px 10px;border-radius:10px}
+.del:hover,.del.sure{background:var(--red);color:#fff}
+.empty{text-align:center;padding:40px 10px;color:var(--muted)}
+.empty .em{font-size:44px}
+.hide{display:none}
+footer{text-align:center;color:var(--muted);font-size:12px;padding-bottom:30px}
+</style>
+</head>
+<body>
+<header>
+  <span class="badge">Fresh · Fast · Flavourful</span>
+  <h1>Liaquat Bitess</h1>
+  <p>Daily order log</p>
+</header>
+<nav>
+  <button id="t-new" class="on">➕ New Order</button>
+  <button id="t-orders">📋 All Orders</button>
+</nav>
+<main>
+  <section id="v-new" class="card">
+    <h2>Log a New Order</h2>
+    <p class="sub">Enter the customer, tap the items they ordered, and the bill.</p>
+    <label class="l" for="cust">Customer name</label>
+    <input id="cust" type="text" placeholder="e.g. Ahmed Khan" autocomplete="off">
+    <label class="l">What did they order?</label>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>Menu item</th><th>Quantity</th></tr></thead>
+        <tbody id="menu"></tbody>
+      </table>
+    </div>
+    <label class="l" for="amt">Amount spent</label>
+    <div class="money"><b>Rs</b><input id="amt" type="number" min="0" step="1" inputmode="numeric" placeholder="0"></div>
+    <button class="go" id="save">Save Order</button>
+    <div class="msg" id="msg"></div>
+  </section>
+
+  <section id="v-orders" class="card hide">
+    <h2>Order Records</h2>
+    <p class="sub">Every order you have logged, newest first.</p>
+    <div class="stats">
+      <div class="stat"><small>Total orders</small><div id="s-n">0</div></div>
+      <div class="stat"><small>Total sales</small><div id="s-t">Rs 0</div></div>
+    </div>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>#</th><th>Time</th><th>Customer</th><th>Items</th><th>Spent</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty hide" id="empty"><div class="em">🍽️</div>No orders yet. Log your first one!</div>
+  </section>
+</main>
+<footer>© Liaquat Bitess · Orders are saved on this device’s browser</footer>
+
+<script>
+var MENU=[{n:'Chicken',e:'🍗'},{n:'Oreo Shake',e:'🥤'},{n:'Chips Chaat',e:'🍟'}];
+var KEY='liaquat-bitess-orders', orders=[], qty={};
+try{orders=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){orders=[]}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(orders))}catch(e){}}
+var $=function(i){return document.getElementById(i)};
+
+function buildMenu(){
+  var tb=$('menu'); tb.innerHTML='';
+  MENU.forEach(function(m){
+    qty[m.n]=0;
+    var tr=document.createElement('tr'), td1=document.createElement('td'), td2=document.createElement('td');
+    td1.innerHTML='<div class="item"><span class="em">'+m.e+'</span><span>'+m.n+'</span></div>';
+    var q=document.createElement('div'); q.className='qty';
+    var minus=document.createElement('button'); minus.type='button'; minus.textContent='−';
+    var num=document.createElement('span'); num.textContent='0';
+    var plus=document.createElement('button'); plus.type='button'; plus.textContent='+';
+    function set(v){qty[m.n]=Math.max(0,Math.min(99,v)); num.textContent=qty[m.n]; tr.className=qty[m.n]?'pick':''}
+    minus.onclick=function(){set(qty[m.n]-1)}; plus.onclick=function(){set(qty[m.n]+1)};
+    tr.onclick=function(ev){if(ev.target.tagName!=='BUTTON'&&!qty[m.n])set(1)};
+    q.append(minus,num,plus); td2.appendChild(q); tr.append(td1,td2); tb.appendChild(tr);
+    tr._set=set;
+  });
+}
+
+function say(t,c){var m=$('msg');m.textContent=t;m.className='msg '+c}
+
+$('save').onclick=function(){
+  var name=$('cust').value.trim(), amt=parseFloat($('amt').value);
+  var items=MENU.filter(function(m){return qty[m.n]>0}).map(function(m){return {n:m.n,q:qty[m.n]}});
+  if(!name) return say('Please enter the customer’s name.','err');
+  if(!items.length) return say('Please select at least one item.','err');
+  if(isNaN(amt)||amt<=0) return say('Please enter the amount spent.','err');
+  orders.unshift({id:Date.now(),name:name,items:items,amt:amt,at:new Date().toISOString()});
+  persist(); renderOrders();
+  $('cust').value=''; $('amt').value='';
+  Array.prototype.forEach.call($('menu').children,function(tr){tr._set(0)});
+  say('Order saved for '+name+' ✓','ok');
+  setTimeout(function(){say('','')},3000);
+};
+
+function fmt(n){return 'Rs '+Number(n).toLocaleString('en-PK')}
+function renderOrders(){
+  var tb=$('rows'); tb.innerHTML='';
+  var total=0;
+  orders.forEach(function(o,i){
+    total+=o.amt;
+    var tr=document.createElement('tr');
+    var d=new Date(o.at);
+    var tags=o.items.map(function(x){return '<span class="tag">'+x.q+'× '+x.n+'</span>'}).join('');
+    tr.innerHTML='<td>'+(orders.length-i)+'</td><td></td><td><b></b></td><td>'+tags+'</td><td><b>'+fmt(o.amt)+'</b></td><td></td>';
+    tr.children[1].textContent=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+', '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    tr.children[2].firstChild.textContent=o.name;
+    var b=document.createElement('button'); b.className='del'; b.textContent='Delete';
+    b.onclick=function(){
+      if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent='Sure?';setTimeout(function(){b.classList.remove('sure');b.textContent='Delete'},2500);return}
+      orders=orders.filter(function(x){return x.id!==o.id}); persist(); renderOrders();
+    };
+    tr.children[5].appendChild(b); tb.appendChild(tr);
+  });
+  $('s-n').textContent=orders.length; $('s-t').textContent=fmt(total);
+  $('empty').classList.toggle('hide',orders.length>0);
+}
+
+function show(v){
+  var isO=v==='orders';
+  $('v-new').classList.toggle('hide',isO); $('v-orders').classList.toggle('hide',!isO);
+  $('t-new').classList.toggle('on',!isO); $('t-orders').classList.toggle('on',isO);
+}
+$('t-new').onclick=function(){location.hash='new'};
+$('t-orders').onclick=function(){location.hash='orders'};
+function route(){show(location.hash==='#orders'?'orders':'new')}
+window.addEventListener('hashchange',route);
+
+buildMenu(); renderOrders(); route();
+</script>
+</body>
+</html>
